@@ -1,33 +1,25 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { register} from '@/services/auth'
 
 const email = ref('')
 const password = ref('')
 const name = ref('')
 const firstname = ref('')
+const error = ref('')
 const router = useRouter()
 
 async function handleRegister() {
+  error.value = ''
   try {
-    const response = await fetch('http://localhost:3000/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: email.value,
-        password: password.value,
-        name: name.value,
-        firstname: firstname.value
-      })
-    })
-    router.push('/signup_page')
+    await register(email.value, password.value, name.value, firstname.value)
+    sessionStorage.setItem('justRegistered', 'true')
+    router.push('/success_register')
   } catch (err) {
-    console.error('ERREUR inscription', err)
+    error.value = err.message
   }
 }
-
 </script>
 
 <template>
@@ -59,6 +51,7 @@ async function handleRegister() {
     />
     <button type="submit">Sign Up</button>
     </form>
+    <p v-if="error" style="color: red;">{{ error }}</p>
 </div>
 </template>
 

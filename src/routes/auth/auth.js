@@ -34,7 +34,8 @@ router.post('/register', async (req, res, next) => {
             'SELECT id FROM user WHERE email = ?',
             [email]
         );
-        const payload = { id: userID, email: [email] };
+
+        const payload = { id: userID };
         const token = jwt.sign(payload, secret);
 
         res.status(201).send({
@@ -69,8 +70,11 @@ router.post('/login', async (req, res, next) => {
             });
         }
 
-        const payload = { id: user.id, email: user.email };
-        const token = jwt.sign(payload, secret);
+        const token = jwt.sign(
+            { id: user.id },
+            secret,
+            { expiresIn: '1m' }
+        );
 
         delete user.password;
 

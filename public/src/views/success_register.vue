@@ -19,7 +19,7 @@ import { RouterLink } from 'vue-router'
 }
 
 h1 {
-  font-size: 6rem;
+  font-size: 3rem;
   margin-bottom: 2rem;
   color: var(--text);
 }

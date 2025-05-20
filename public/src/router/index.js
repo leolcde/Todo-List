@@ -2,8 +2,9 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/home.vue'
 import LoginView from '../views/login.vue'
 import RegisterView from '../views/register.vue'
-import UserPageView from '../views/user_page.vue'
-import SignUpPageView from '@/views/signup_page.vue'
+import ToDoView from '../views/todo.vue'
+import SuccessRegistereView from '../views/success_register.vue'
+import axios from 'axios'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,16 +25,44 @@ const router = createRouter({
       component: RegisterView,
     },
     {
-      path: '/user_page',
-      name: 'user_page',
-      component: UserPageView,
+      path: '/todo',
+      name: 'todo',
+      component: ToDoView,
+      meta: { requiresAuth: true }
     },
     {
-      path: '/signup_page',
-      name: 'signup_page',
-      component: SignUpPageView,
+      path: '/success_register',
+      name: 'success_register',
+      component: SuccessRegistereView,
+      beforeEnter: (to, from, next) => {
+        if (sessionStorage.getItem('justRegistered')) {
+          sessionStorage.removeItem('justRegistered')
+          next()
+        } else {
+          next('/')
+        }
+      }
     },
   ],
+})
+
+router.beforeEach(async (to, from, next) => {
+  if (to.meta.requiresAuth) {
+    const token = localStorage.getItem('token')
+    if (!token) return next('/')
+
+    try {
+      await axios.get('/user', {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      next()
+    } catch (err) {
+      localStorage.removeItem('token')
+      next('/')
+    }
+  } else {
+    next()
+  }
 })
 
 export default router

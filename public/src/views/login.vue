@@ -13,7 +13,7 @@ async function handleLogin() {
   try {
     const data = await login(email.value, password.value)
     localStorage.setItem('token', data.token)
-    router.push('/user_page')
+    router.push('/todo')
   } catch (err) {
     error.value = err.message
   }

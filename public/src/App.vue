@@ -10,11 +10,13 @@ import { RouterLink } from 'vue-router'
     <div class="bar"></div>
     <div class="text_logo">ETD</div>
   </RouterLink>
+
+  <p class="copyright">© Created by Jules & Leo</p>
 </template>
 
 <style scoped>
 .logo {
-  position: fixed;
+  position: absolute;
   top: 1rem;
   left: 2rem;
   display: flex;
@@ -40,5 +42,13 @@ import { RouterLink } from 'vue-router'
   color: var(--text);
   letter-spacing: 0.1em;
   user-select: none;
+}
+
+.copyright {
+  color: var(--text);
+  font-style: italic;
+  position: sticky;
+  text-align: center;
+  bottom: -100px;
 }
 </style>
