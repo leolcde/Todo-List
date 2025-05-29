@@ -16,9 +16,9 @@ A clean and responsive ToDoList web application with user authentication (Login/
 
 ## 🧰 Tech Stack
 
-- **Frontend**: HTML, CSS, JavaScript *(or React/Vue if applicable)*  
+- **Frontend**: VueJs  
 - **Backend**: Node.js, Express  
-- **Database**: MongoDB *(or other, specify if needed)*  
+- **Database**: MySql *(or other, specify if needed)*  
 - **Auth**: JWT / Sessions *(specify what's used)*
 
 ---
